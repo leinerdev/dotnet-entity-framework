@@ -17,4 +17,9 @@ app.MapGet("/dbconexion", ([FromServices] TareasContext dbContext) =>
   return Results.Ok("Conexión a la base de datos en memoria establecida: " + dbContext.Database.IsInMemory());
 });
 
+app.MapGet("/api/tareas", async ([FromServices] TareasContext dbContext) => 
+{
+  return Results.Ok(dbContext.Tareas.Include(p => p.Categoria).Where(p => p.PrioridadTarea == projectef.Models.Prioridad.Baja));
+});
+
 await app.RunAsync();
